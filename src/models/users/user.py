@@ -1,5 +1,6 @@
 from src.common.database import Database
 import uuid
+import src.models.users.errors as UserErrors
 
 class User:
 
@@ -20,12 +21,12 @@ class User:
 		associated to that email is correct.
 		Uses sha512 hashed password.
 		"""
-		user_data = Database.find_one("users", {'email': email})
+		user_data = Database.find_one("users", {'email': email}) 	# Password in sha512
 		if user_data is None:
 			# Tell user the email doesn't exist
-			pass
+			raise UserErrors.UserNotExistsErorr("Your user does not exist.")
 		if not Utils.check_hashed_password(password, user_data['password']):
 			# Tell user that their password is wrong
-			pass
+			raise UserErrors.IncorrectPasswordError("Your password was wrong.")
 
 		return True
