@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-import models.items.constants as ItemConstants
+import items.constants as ItemConstants
 
 class Item:
 
