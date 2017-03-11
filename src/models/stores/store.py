@@ -1,6 +1,7 @@
 import uuid
 from common.database import Database
 import models.stores.constants as StoreConstants
+import models.stores.errors as StoreErrors
 
 class Store:
 
@@ -39,4 +40,16 @@ class Store:
 	def get_by_url_prefix(cls, url_prefix):
 		"""Allow users to give the item url."""
 		return cls(**Database.find_one(StoreConstants.COLLECTION, {"url_prefix": {"$regex": '^{}'.format(url_prefix)}}))
+
+	@classmethod
+	def find_by_url(cls, url):
+		"""
+		Try to find and return a store from a url, if there isn't anything, return None
+		"""
+		for i in range(0, len(url) +  1):
+			try:
+				store = cls.get_by_url_prefix(url[:i])
+				return store
+			except:
+				raise StoreErrors.StoreNotFoundException("The URL prefix did not give us any results.")
 

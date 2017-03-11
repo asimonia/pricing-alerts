@@ -6,10 +6,10 @@ import uuid
 
 class Item:
 
-	def __init__(self, name, url, store, _id=None):
+	def __init__(self, name, url, _id=None):
 		self.name = name
 		self.url = url
-		self.store = store
+		store = Store.find_by_url(url)
 		tag_name = store.tag_name
 		query = store.query
 		self.price = self.load_price(tag_name, query)
@@ -41,6 +41,7 @@ class Item:
 	def json(self):
 		"""Return the name and URL of the item"""
 		return {
+			"_id": self._id,
 			"name": self.name,
 			"url": self.url,
 		}
