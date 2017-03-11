@@ -46,3 +46,7 @@ class Item:
 			"url": self.url,
 		}
 
+	@classmethod
+	def get_by_id(cls, item_id):
+		return Database.find_one(ItemConstants.COLLECTION, {"_id": item_id})
+
