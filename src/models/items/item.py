@@ -16,8 +16,9 @@ class Item:
 		return "<Item {} with URL {}>".format(self.name, self.url)
 
 	def load_price(self, tag_name, query):
-		"""For Amazon, the html tag to find a item
-		<span id="priceblock_ourprice" class="a-size-medium a-color-price">$24.42</span>
+		"""
+		Load the price of any item and also as the tag name and query make sense
+		for the URL.
 		"""
 		request = requests.get(self.url)
 		content = request.content
