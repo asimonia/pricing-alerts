@@ -2,16 +2,18 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import items.constants as ItemConstants
+import uuid
 
 class Item:
 
-	def __init__(self, name, url, store):
+	def __init__(self, name, url, store, _id=None):
 		self.name = name
 		self.url = url
 		self.store = store
 		tag_name = store.tag_name
 		query = store.query
 		self.price = self.load_price(tag_name, query)
+		self._id = uuid.uuid4().hex if _id is None else _id
 
 	def __repr__(self):
 		return "<Item {} with URL {}>".format(self.name, self.url)
