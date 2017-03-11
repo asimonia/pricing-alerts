@@ -1,7 +1,8 @@
 from common.database import Database
 import uuid
 import models.users.errors as UserErrors
-from Utils import hash_password
+from common.utils import Utils
+
 
 class User:
 
@@ -42,10 +43,10 @@ class User:
 
 		if user_data is not None:
 			# Tell user they are already registered
-			pass
+			raise UserErrors.UserAlreadyRegisteredError("The email you used to register already exists.")
 		if not Utils.email_is_valid(email):
 			# Tell user that their email is not constructed properly
-			pass
+			raise UserErrors.InvalidEmailError("The email does not have the right format.")
 
 		User(email, Utils.hash_password(password)).save_to_db()
 
