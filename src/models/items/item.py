@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+import models.items.constants as ItemConstants
 
 class Item:
 
@@ -30,4 +31,15 @@ class Item:
 		match = pattern.search(string_price)
 
 		return match.group()
+
+	def save_to_mongo(self):
+		# Insert JSON representation
+		Database.insert(ItemConstants.COLLECTION, self.json())
+
+	def json(self):
+		"""Return the name and URL of the item"""
+		return {
+			"name": self.name,
+			"url": self.url,
+		}
 
