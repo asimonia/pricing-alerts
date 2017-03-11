@@ -1,5 +1,5 @@
 from flask import Flask
-from src.common.database import Database
+from common.database import Database
 
 
 app = Flask(__name__)
@@ -12,5 +12,5 @@ def init_db():
 	Database.initialize()
 
 
-from src.models.users.views import user_blueprint
+from models.users.views import user_blueprint
 app.register_blueprint(user_blueprint, url_prefix="/users")
