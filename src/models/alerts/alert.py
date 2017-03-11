@@ -1,13 +1,16 @@
 import uuid
 import requests
+import datetime
 import models.alerts.constants as AlertConstants
+from common.database import Database
 
 class Alert:
 	
-	def __init__(self, user, price_limit, item, _id=None):
+	def __init__(self, user, price_limit, item, last_checked=None, _id=None):
 		self.user = user
 		self.price_limit = price_limit
 		self.item = item
+		self.last_checked = datetime.datetime.utcnow() if last_checked is None else last_checked
 		self._id = uuid.uuid4().hex if _id is None else _id
 
 	def __repr__(self):
@@ -25,3 +28,10 @@ class Alert:
 				"text": "We've found a deal!"
 			}
 		)
+
+	@classmethod
+	def find_needing_update(cls, minutes_since_update=AlertConstants.ALERT_TIMEOUT):
+		last_updated_limit = datetime.datetime.utcnow() - datetime.timedelta(minutes=minutes_since_update)
+		return [cls(**elem) for elem in Database.find(AlertConstants.COLLECTION, {"last_checked": 
+																					{"$gte": last_updated_limit}
+																				  })]
