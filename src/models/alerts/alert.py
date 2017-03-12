@@ -46,5 +46,5 @@ class Alert:
 			"price_limit": self.price_limit,
 			"last_checked": self.last_checked,
 			"user_email": self.user_email,
-			"item": self.itme.json()
+			"item_id": self.item._id
 		}
