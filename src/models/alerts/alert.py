@@ -48,3 +48,14 @@ class Alert:
 			"user_email": self.user_email,
 			"item_id": self.item._id
 		}
+
+	def load_item_price(self):
+		self.item.load_price()
+		self.last_checked = datetime.datetime.utcnow()
+		self.save_to_mongo()
+		return self.item.price
+
+	def send_email_if_price_reached(self):
+		"""Send an email if price has been reached"""
+		if self.item.price < self.price_limit:
+			self.send()
