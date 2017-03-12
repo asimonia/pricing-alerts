@@ -28,10 +28,17 @@
 				<li><a href="/stores">Stores</a></li>
 				<li><a href="/alerts">Alerts</a></li>
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
-				<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-			</ul>
+			{% if session['email'] %}
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/alerts"><span class="glyphicon glyphicon-alert"></span> Your Alerts</a></li>
+					<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				</ul>
+			{% else %}
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+					<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				</ul>
+			{% endif %}
 		</div>
 	</div>
 </nav>
