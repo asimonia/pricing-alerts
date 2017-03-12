@@ -32,7 +32,7 @@ class Item:
 		pattern = re.compile("(\d+.\d+)")		# extract the price
 		match = pattern.search(string_price)
 
-		self.price = match.group()
+		self.price = float(match.group())
 		return self.price
 
 	def save_to_mongo(self):
