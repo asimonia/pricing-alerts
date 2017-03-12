@@ -21,5 +21,10 @@ class Database:
 
 	@staticmethod
 	def find_one(collection, query):
-		"""Find one document withint a collection"""
+		"""Find one document within a collection"""
 		return Database.DATABASE[collection].find_one(query)
+
+	@staticmethod
+	def update(collection, query, data):
+		"""Update a document within a collection"""
+		Database.DATABASE[collection].update(query, data, upsert=True)

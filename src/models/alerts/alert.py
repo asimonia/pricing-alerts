@@ -40,6 +40,9 @@ class Alert:
 	def save_to_mongo(self):
 		Database.insert(AlertConstants.COLLECTION, self.json())
 
+	def save_to_mongo(self):
+		Database.update(AlertConstants.COLLECTION, {"_id": self._id}, self.json())
+
 	def json(self):
 		return {
 			"_id": self._id,
