@@ -62,3 +62,9 @@ class User:
 			"password": self.password
 		}
 
+	@classmethod
+	def find_by_email(cls, email):
+		return cls(**Database.find_one('users', {'email': email}))
+
+	def get_alerts(self):
+		return Alert.find_by_user_email(self.email)
