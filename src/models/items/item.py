@@ -6,13 +6,13 @@ import uuid
 
 class Item:
 
-	def __init__(self, name, url, _id=None):
+	def __init__(self, name, url, price=None, _id=None):
 		self.name = name
 		self.url = url
 		store = Store.find_by_url(url)
 		self.tag_name = store.tag_name
 		self.query = store.query
-		self.price = self.load_price(tag_name, query)
+		self.price = None if price is None else price
 		self._id = uuid.uuid4().hex if _id is None else _id
 
 	def __repr__(self):
@@ -37,7 +37,7 @@ class Item:
 
 	def save_to_mongo(self):
 		# Insert JSON representation
-		Database.insert(ItemConstants.COLLECTION, self.json())
+		Database.update(ItemConstants.COLLECTION, {'_id': self._id}, self.json())
 
 	def json(self):
 		"""Return the name and URL of the item"""
@@ -45,6 +45,7 @@ class Item:
 			"_id": self._id,
 			"name": self.name,
 			"url": self.url,
+			"price": self.price
 		}
 
 	@classmethod
