@@ -7,12 +7,13 @@ from common.database import Database
 
 class Alert:
 	
-	def __init__(self, user_email, price_limit, item_id, last_checked=None, _id=None):
+	def __init__(self, user_email, price_limit, item_id, active=True, last_checked=None, _id=None):
 		self.user_email = user_email
 		self.price_limit = price_limit
 		self.item = Item.get_by_id(item_id)
 		self.last_checked = datetime.datetime.utcnow() if last_checked is None else last_checked
 		self._id = uuid.uuid4().hex if _id is None else _id
+		self.active = active
 
 	def __repr__(self):
 		return "<Alert for {} on item {} with price {}>".format(self.user_email, 
@@ -71,4 +72,8 @@ class Alert:
 	@classmethod
 	def find_by_id(cls, alert_id):
 		return cls(**Database.find_one(AlertConstants.COLLECTION, {'_id': alert_id}))
+
+	def deactivate(self):
+		self.active = False
+		self.save_to_mongo()
 
