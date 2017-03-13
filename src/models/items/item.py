@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-import items.constants as ItemConstants
+from . import constants as ItemConstants
 import uuid
 
 class Item:
@@ -49,5 +49,5 @@ class Item:
 
 	@classmethod
 	def get_by_id(cls, item_id):
-		return cls(**Database.find_one(ItemConstants.COLLECTION, {"_id": item_id})
+		return cls(**Database.find_one(ItemConstants.COLLECTION, {"_id": item_id}))
 
