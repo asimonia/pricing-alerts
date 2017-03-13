@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="form-size">
-		<form>
+		<form action="{{ url_for('users.register_user') }}" method="post">
 			<div class="form-group">
 				<label for="email">Email address</label>
 				<input type="email" class="form-control" id="email" name="email" placeholder="Email">
