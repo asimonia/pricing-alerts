@@ -1,7 +1,9 @@
-from common.database import Database
 import uuid
+from common.database import Database
 import models.users.errors as UserErrors
 from common.utils import Utils
+import models.users.constants as UserConstants
+from models.alerts.alert import Alert
 
 
 class User:
@@ -23,7 +25,7 @@ class User:
 		associated to that email is correct.
 		Uses sha512 hashed password.
 		"""
-		user_data = Database.find_one("users", {'email': email}) 	# Password in sha512
+		user_data = Database.find_one(UserConstants.COLLECTION, {'email': email}) 	# Password in sha512
 		if user_data is None:
 			# Tell user the email doesn't exist
 			raise UserErrors.UserNotExistsErorr("Your user does not exist.")
@@ -39,7 +41,7 @@ class User:
 		This method registers a user using email and password.
 		The password already comes hashed as sha-512.
 		"""
-		user_data = Database.find_one("users", {"email": email})
+		user_data = Database.find_one(UserConstants.COLLECTION, {"email": email})
 
 		if user_data is not None:
 			# Tell user they are already registered
@@ -53,7 +55,7 @@ class User:
 		return True
 
 	def save_to_db(self):
-		Database.insert("users", self.json())
+		Database.insert(UserConstants.COLLECTION, self.json())
 
 	def json(self):
 		return {
@@ -64,7 +66,7 @@ class User:
 
 	@classmethod
 	def find_by_email(cls, email):
-		return cls(**Database.find_one('users', {'email': email}))
+		return cls(**Database.find_one(UserConstants.COLLECTION, {'email': email}))
 
 	def get_alerts(self):
 		return Alert.find_by_user_email(self.email)
