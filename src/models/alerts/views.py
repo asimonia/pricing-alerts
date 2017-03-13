@@ -1,4 +1,4 @@
-from flask import blueprints, render_template, request, session
+from flask import blueprints, render_template, request, session, redirect, url_for
 from models.alerts.alert import Alert
 from models.items.item import Item
 import models.users.decorators as user_decorators
@@ -39,3 +39,8 @@ def get_alert_page(alert_id):
 	alert = Alert.find_by_id(alert_id)
 	return render_template('alerts/alert.html')
 
+
+@alert_blueprint.route('/check_price/<string:alert_id>')
+def check_alert_price(alert_id):
+	Alert.find_by_id(alert_id).load_item_price()
+	return redirect(url_for('.get_alert_page', alert_id=alert_id))
