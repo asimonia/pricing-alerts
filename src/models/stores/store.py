@@ -25,12 +25,13 @@ class Store:
 		}
 
 	@classmethod
-	def get_by_id(self, id):
+	def get_by_id(cls, id):
 		"""Get the store by id"""
 		return cls(**Database.find_one(StoreConstants.COLLECTION, {"_id": id}))
 
 	def save_to_mongo(self):
-		Database.insert(StoreConstants.COLLECTION, self.json())
+		"""Update a record in db"""
+		Database.update(StoreConstants.COLLECTION, {"_id": self._id}, self.json())
 
 	@classmethod
 	def get_by_name(cls, store_name):
