@@ -50,7 +50,8 @@ class Alert:
 			"price_limit": self.price_limit,
 			"last_checked": self.last_checked,
 			"user_email": self.user_email,
-			"item_id": self.item._id
+			"item_id": self.item._id,
+			"active": self.active
 		}
 
 	def load_item_price(self):
@@ -75,5 +76,9 @@ class Alert:
 
 	def deactivate(self):
 		self.active = False
+		self.save_to_mongo()
+
+	def activate(self):
+		self.active = True
 		self.save_to_mongo()
 
