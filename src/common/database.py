@@ -28,3 +28,8 @@ class Database:
 	def update(collection, query, data):
 		"""Update a document within a collection"""
 		Database.DATABASE[collection].update(query, data, upsert=True)
+
+	@staticmethod
+	def remove(collection, query):
+		"""Remove a document within a collection"""
+		Database.DATABASE[collection].remove(query)

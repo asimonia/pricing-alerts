@@ -12,6 +12,7 @@
 				<a class="btn btn-danger" href="{{ url_for('alerts.deactivate_alert', alert_id=alert._id) }}" role="button">Deactive Alert</a>
 			{% else %}
 				<a class="btn btn-success" href="{{ url_for('alerts.activate_alert', alert_id=alert._id) }}" role="button">Active Alert</a>
+				<a class="btn btn-danger" href="{{ url_for('alerts.delete_alert', alert_id=alert._id) }}" role="button">Permanently Delete Alert</a>
 			{% endif %}
 			<a class="btn btn-warning" href="{{ url_for('alerts.check_alert', alert_id=alert._id) }}" role="button">Check Alert Price</a>
 		</div>

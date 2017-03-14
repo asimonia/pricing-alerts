@@ -82,3 +82,6 @@ class Alert:
 		self.active = True
 		self.save_to_mongo()
 
+	def delete(self):
+		Database.remove(AlertConstants.COLLECTION, {'_id': self._id})
+		
