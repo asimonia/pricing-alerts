@@ -1,5 +1,5 @@
 from functools import wraps
-from src.app import app
+from app import app
 
 from flask import session, url_for, redirect
 
